@@ -22,8 +22,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo '=== Building JAR with Maven ==='
-                sh '/usr/share/maven/bin/mvn clean install -DskipTests'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
