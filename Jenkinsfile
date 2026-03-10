@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         JAR_NAME = 'spring-boot-data-jpa-0.0.1-SNAPSHOT.jar'
-        DEPLOY_DIR = '/home/azureuser/backend'
+        DEPLOY_DIR = '/opt/backend'
     }
 
     stages {
