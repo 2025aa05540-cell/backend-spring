@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/employees")
-@CrossOrigin(origins = "http://localhost:4200")  // Allow Angular dev server
 public class EmployeeController {
 
     @Autowired
