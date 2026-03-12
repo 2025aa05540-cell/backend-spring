@@ -17,7 +17,9 @@ public class WebConfig {
                         .allowedOrigins(
                                 "http://localhost:4200",
                                 "http://20.244.84.188",
-                                "http://20.244.84.188:4200"
+                                "http://20.244.84.188:4200",
+                                "http://managehub.ddns.net",
+                                "https://managehub.ddns.net"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
