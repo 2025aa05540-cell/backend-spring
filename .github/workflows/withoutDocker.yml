@@ -27,9 +27,8 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.VM_SSH_KEY }}
-          source: "target/spring-boot-data-jpa-0.0.1-SNAPSHOT.jar"
-          target: "/opt/backend/"
-          strip_components: 1
+          source: "target/*.jar"
+          target: "/home/${{ secrets.VM_USERNAME }}/backend/"
 
       - name: Deploy on VM
         uses: appleboy/ssh-action@v0.1.5
