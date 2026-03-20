@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             echo "=== Stopping old Spring Boot ==="
-            pkill -f spring-boot-data-jpa || true
+            pkill -f 'java -jar /opt/backend/spring-boot-data-jpa' || true
             sleep 3
 
             echo "=== Starting new Spring Boot ==="
