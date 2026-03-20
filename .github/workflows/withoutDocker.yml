@@ -21,6 +21,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
+      # ✅ Copy JAR (FLATTEN STRUCTURE)
       - name: Copy JAR to VM
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -29,7 +30,9 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           source: "target/*.jar"
           target: "/home/${{ secrets.VM_USERNAME }}/backend/"
+          strip_components: 1   # 🔥 IMPORTANT
 
+      # ✅ Deploy
       - name: Deploy on VM
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -38,20 +41,20 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             echo "=== Stopping old Spring Boot ==="
+
             PID=$(ps -ef | grep 'spring-boot-data-jpa' | grep -v grep | awk '{print $2}')
-            
             if [ -n "$PID" ]; then
               echo "Killing process $PID"
               kill -9 $PID
             else
               echo "No existing app running"
             fi
-            
+
             sleep 3
-            
+
             echo "=== Checking files ==="
             ls -l /home/${{ secrets.VM_USERNAME }}/backend/
-            
+
             echo "=== Starting new Spring Boot ==="
             nohup java -jar /home/${{ secrets.VM_USERNAME }}/backend/*.jar \
               --server.port=8081 \
@@ -59,14 +62,15 @@ jobs:
               --spring.datasource.username=root \
               --spring.datasource.password=${{ secrets.DB_PASSWORD }} \
               > /home/${{ secrets.VM_USERNAME }}/backend/app.log 2>&1 &
-            
+
             sleep 5
-            
+
             echo "=== Checking if running ==="
             if sudo netstat -tlnp | grep 8081; then
               echo "✅ Spring Boot is running!"
             else
               echo "❌ Spring Boot failed!"
+              echo "=== LOGS ==="
               cat /home/${{ secrets.VM_USERNAME }}/backend/app.log
               exit 1
             fi
