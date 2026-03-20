@@ -66,11 +66,10 @@ jobs:
             sleep 5
 
             echo "=== Checking if running ==="
-            if sudo netstat -tlnp | grep 8081; then
+            if curl -s http://localhost:8081 > /dev/null; then
               echo "✅ Spring Boot is running!"
             else
               echo "❌ Spring Boot failed!"
-              echo "=== LOGS ==="
               cat /home/${{ secrets.VM_USERNAME }}/backend/app.log
               exit 1
             fi
