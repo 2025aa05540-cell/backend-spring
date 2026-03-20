@@ -63,7 +63,7 @@ jobs:
               --spring.datasource.password=${{ secrets.DB_PASSWORD }} \
               > /home/${{ secrets.VM_USERNAME }}/backend/app.log 2>&1 &
 
-            sleep 5
+            sleep 15
 
             echo "=== Checking if running ==="
             if curl -s http://localhost:8081 > /dev/null; then
