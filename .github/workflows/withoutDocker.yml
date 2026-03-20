@@ -38,7 +38,14 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             echo "=== Stopping old Spring Boot ==="
-            pkill -f 'java -jar' || true
+            PID=$(pgrep -f '/home/.*/backend/.*\.jar')
+            if [ ! -z "$PID" ]; then
+              echo "Killing process $PID"
+              kill -9 $PID
+            else
+              echo "No existing app running"
+            fi
+            
             sleep 3
             
             echo "=== Checking files ==="
