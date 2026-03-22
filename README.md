@@ -1,4 +1,4 @@
-## Phase-1
+### Phase-1
 What you'll learn:
 ├── Linux commands
 ├── Installing software manually
