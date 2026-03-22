@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-backend
+spec:
+  selector:
+    app: spring-backend
+  ports:
+    - port: 8081
+      targetPort: 8081
+  type: ClusterIP
